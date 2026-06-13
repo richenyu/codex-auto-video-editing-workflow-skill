@@ -1,74 +1,83 @@
-# Codex Auto Video Editing Workflow Skill
+# Codex自动剪视频神器
 
-This repository contains an installable Codex Skill for automatic talking-head and short-form video editing.
+这是一个可安装到 Codex 的自动剪视频 Skill，用来把口播、讲解、财经/商业/技术类短视频自动剪成更适合发布的竖屏成片。
 
-## What It Does
+## 它能做什么
 
-The skill teaches Codex a reusable video-editing workflow:
+这个 Skill 会让 Codex 按一套固定工作流剪视频：
 
-- clean repeated speech, restarts, filler, dead air, and weak fragments first
-- apply the default `1.2x` talking-head speed after cleanup while preserving pitch
-- add large polished visual materials instead of tiny sticker-like labels
-- use dynamic cards, real cutaways, screen captures, charts, photos, UI walkthroughs, and B-roll
-- allow one, two, or occasionally three large materials on screen when useful
-- add readable captions, light upbeat BGM, and varied quiet SFX
-- export and QA vertical 1080x1920 MP4 outputs
-- check or bootstrap local tools such as FFmpeg, MoviePy, and auto-editor
+- 先清理口播：停顿、重复、重说、废话、错误片段、弱信息片段
+- 口播清理完成后，默认把语速调成 `1.2x`，并保持音调正常
+- 自动规划大块资料镜头，避免贴脸小标签、小贴纸、小药丸字卡
+- 资料镜头优先做成动态卡片、真实 cutaway、网页/产品/图表/截图/视频化素材
+- 需要时可以 1/2/3 个资料同屏，但必须大块、美观、有主次
+- 默认添加清晰字幕、轻快 BGM、轻量音效
+- 默认导出竖屏 `1080x1920` MP4
+- 导出前做规则审计、抽帧检查、音量检查、解码检查
+- 第一次使用时可以检查并引导安装 FFmpeg、MoviePy、auto-editor 等剪辑依赖
 
-## Install In Codex
+## 安装方式
 
-Ask Codex:
+让同事在 Codex 里输入：
 
 ```text
-Please install this skill from GitHub:
+请从 GitHub 安装这个 skill：
 richenyu/codex-auto-video-editing-workflow-skill/skills/auto-video-editing-workflow
 ```
 
-If the repository is private, give your teammate GitHub access first.
+如果仓库是私有的，先给同事开 GitHub 访问权限。
 
-## First Use
+## 第一次使用
 
-After installing the skill, ask Codex:
+安装后，让同事在 Codex 里输入：
 
 ```text
-Use $auto-video-editing-workflow to edit the latest talking-head video. If local tools are missing, inspect the environment and install the required dependencies first.
+用 $auto-video-editing-workflow 自动剪最新口播视频；如果环境缺工具，先帮我检查并安装依赖。
 ```
 
-On the first run, Codex should inspect the machine with:
+第一次运行时，Codex 会先检查本机环境：
 
 ```text
 scripts/check-video-workflow.ps1
 ```
 
-If dependencies are missing, Codex should ask for permission before running:
+如果缺少依赖，Codex 会先说明缺什么，再请求授权运行：
 
 ```text
 scripts/setup-video-workflow.ps1
 ```
 
-The setup script can create working folders, download FFmpeg, create a Python virtual environment, and install packages such as MoviePy and auto-editor. It should not silently download software.
+这个安装脚本可以创建工作目录、下载 FFmpeg、创建 Python 虚拟环境，并安装 MoviePy、auto-editor 等依赖。它不会在没有说明和授权的情况下偷偷下载软件。
 
-## Important Boundary
+## 重要边界
 
-The skill contains workflow rules, aesthetic rules, QA rules, and bootstrap scripts. It is not a complete video-editing application by itself.
+这个 Skill 保存的是“剪辑工作流、审美规则、QA 规则、环境检查脚本和安装脚本”，它本身不是完整剪辑软件。
 
-For one-command production editing, the target computer also needs:
+要在同事电脑上做到一句话自动成片，还需要：
 
-- a raw video input folder
-- an output folder
+- 一个口播原视频输入文件夹
+- 一个成片输出文件夹
 - FFmpeg
-- Python and the required packages
-- the actual editing implementation or compatible project scripts
-- optional BGM, fonts, asset libraries, and transcription/model configuration
+- Python 和相关剪辑包
+- 兼容的剪辑脚本或自动剪辑工程
+- 可选的 BGM、字体、素材库、转写模型配置
 
-Once those are configured, future requests can be as short as:
+这些配置好之后，以后就可以直接说：
 
 ```text
-Use $auto-video-editing-workflow to auto edit the latest video.
+用 $auto-video-editing-workflow 自动剪最新视频。
 ```
 
-## Skill Location
+## Skill 位置
 
 ```text
 skills/auto-video-editing-workflow
+```
+
+## 对外名称
+
+对外可以直接叫：
+
+```text
+Codex自动剪视频神器
 ```

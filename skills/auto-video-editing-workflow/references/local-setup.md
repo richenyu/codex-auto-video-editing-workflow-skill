@@ -1,72 +1,72 @@
-# Local Setup
+# 本地环境配置
 
-This skill is portable. Treat all paths as project-specific configuration.
+这个 Skill 是可迁移的。所有路径都应该视为项目配置，不要写死在某一台电脑上。
 
-## Recommended Portable Windows Layout
+## 推荐 Windows 通用目录
 
-When no project-specific paths are available, use a workspace under the user's profile:
+如果当前电脑没有项目专用路径，默认使用用户目录下的工作区：
 
 ```text
-Project root:
+项目根目录：
 %USERPROFILE%\auto-video-editing-workflow
 
-Raw input folder:
+原始口播输入目录：
 %USERPROFILE%\auto-video-editing-workflow\input
 
-Final output folder:
+成片输出目录：
 %USERPROFILE%\auto-video-editing-workflow\output
 
-Default BGM folder:
+BGM 目录：
 %USERPROFILE%\auto-video-editing-workflow\bgm
 
-Tools folder:
+工具目录：
 %USERPROFILE%\auto-video-editing-workflow\tools
 
-Python virtual environment:
+Python 虚拟环境：
 %USERPROFILE%\auto-video-editing-workflow\.venv
 ```
 
-For new windows, if the user says "the new talking-head video is in the folder", sort the configured input folder by `LastWriteTime` and use the latest video unless there is ambiguity.
+如果用户说“新口播已经放到文件夹里了”或“剪最新视频”，按输入目录的 `LastWriteTime` 选择最新视频；如果多个文件时间接近，先确认。
 
-## Configure These Paths
+## 需要配置的路径
 
-Ask for these paths or infer them from the local project:
+如果无法自动推断，向用户确认这些路径：
 
 ```text
-Raw input folder:
+原始口播输入目录：
 <path-to-raw-talking-head-videos>
 
-Final output folder:
+成片输出目录：
 <path-to-final-video-exports>
 
-Default BGM folder:
+BGM 目录：
 <path-to-default-bgm-library>
 
-Project code folder:
+项目代码目录：
 <path-to-auto-video-editing-code>
 
-Main project memory or workflow document:
+项目记忆或工作流说明：
 <path-to-video-editing-workflow-notes>
 ```
 
-## Portable Bootstrap On A New Computer
+## 新电脑第一次启动
 
-Skill installation gives Codex the workflow, rules, and bundled scripts. It does not silently install software by itself. On a new Windows computer, Codex should:
+安装 Skill 只会给 Codex 提供工作流、规则和脚本，不会在安装瞬间静默下载软件。新 Windows 电脑上，Codex 应该：
 
-1. Read `SKILL.md`, `references/workflow.md`, and this file.
-2. Run `scripts/check-video-workflow.ps1` to inspect folders, FFmpeg, Python, project code, and workflow files.
-3. If tools are missing, explain the missing items and request approval before running `scripts/setup-video-workflow.ps1`.
-4. Run setup with the switches needed for that machine, for example:
+1. 读取 `SKILL.md`、`references/workflow.md` 和本文件。
+2. 运行 `scripts/check-video-workflow.ps1` 检查目录、FFmpeg、Python、项目代码和工作流文件。
+3. 如果缺少工具，先说明缺什么，再请求授权运行 `scripts/setup-video-workflow.ps1`。
+4. 根据需要运行安装脚本，例如：
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts\setup-video-workflow.ps1 -DownloadFfmpeg -InstallPythonPackages -WithTranscription
 ```
 
-The setup script can create portable working folders, download FFmpeg, create a Python virtual environment, and install core video-editing packages including MoviePy and auto-editor. Network downloads and package installation should be explicit, not silent.
+安装脚本可以创建工作目录、下载 FFmpeg、创建 Python 虚拟环境，并安装 MoviePy、auto-editor 等核心剪辑包。网络下载和包安装必须明确说明并获得授权。
 
-## Key Project Scripts
+## 兼容项目脚本
 
-If the host project contains an implementation similar to the original workflow, look for:
+如果宿主项目已经有自动剪辑实现，优先寻找：
 
 ```text
 scripts/smart_talk_editor.py
@@ -75,7 +75,7 @@ tools/ffmpeg/bin/ffmpeg.exe
 .venv/Scripts/python.exe
 ```
 
-Useful options in compatible implementations:
+兼容实现中常用参数：
 
 ```text
 --reference-script
@@ -95,7 +95,7 @@ Useful options in compatible implementations:
 --speech-speed 1.2
 ```
 
-## Typical Finance Explainer Parameters
+## 财经/商业解释视频常用参数
 
 ```text
 --visual-mode overlay
@@ -114,12 +114,12 @@ Useful options in compatible implementations:
 --speech-speed 1.2
 ```
 
-## Default Local Music Beds
+## BGM 规则
 
-Use the user-provided files in the configured BGM folder. Do not assume fixed generated defaults.
+使用用户配置的 BGM 目录里的音乐，不要假设固定默认曲目。
 
-Mix BGM below the voice, fade in/out, and lower the music further when the recording has room noise. If the BGM folder is empty, ask the user for music or export without BGM.
+BGM 必须低于人声，淡入淡出；如果录音环境噪声明显，进一步降低 BGM。BGM 目录为空时，询问用户添加音乐，或者导出无 BGM 版本。
 
-## Handoff
+## 交付
 
-After final QA, copy the final MP4 and contact sheet to the configured output folder. Keep reports, SFX event JSON, and intermediate files inside the project output directory.
+QA 完成后，把最终 MP4 和抽帧图复制到配置的输出目录。报告、音效事件 JSON 和中间文件保留在项目输出目录中。
