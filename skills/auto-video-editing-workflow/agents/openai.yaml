@@ -1,0 +1,6 @@
+interface:
+  display_name: "Auto Video Editing Workflow"
+  short_description: "Edit talking-head short videos with a saved workflow"
+  default_prompt: "Use $auto-video-editing-workflow to edit the latest talking-head video. If local tools are missing, inspect the environment and install the required dependencies first."
+policy:
+  allow_implicit_invocation: true
