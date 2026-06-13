@@ -1,6 +1,6 @@
 interface:
-  display_name: "Codex自动剪视频神器"
-  short_description: "按底层逻辑自动剪口播短视频"
-  default_prompt: "用 $auto-video-editing-workflow 自动剪最新口播视频；如果环境缺工具，先帮我检查并安装依赖。"
+  display_name: "Codex Auto Video Editing Workflow"
+  short_description: "Edit talking-head short videos with saved workflow rules"
+  default_prompt: "Use $auto-video-editing-workflow to edit the latest raw talking-head video. If this computer is missing tools or folders, check the environment first and ask before installing dependencies."
 policy:
   allow_implicit_invocation: true

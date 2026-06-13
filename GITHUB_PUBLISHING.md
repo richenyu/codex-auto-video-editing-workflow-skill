@@ -1,61 +1,74 @@
-# 发布说明：Codex自动剪视频神器
+# GitHub Publishing Notes
 
-推荐 GitHub 仓库：
+Recommended repository:
 
 ```text
 richenyu/codex-auto-video-editing-workflow-skill
 ```
 
-说明：GitHub 仓库 slug 建议继续用英文，安装更稳定；对外展示名和 README 标题使用中文名“Codex自动剪视频神器”。
-
-## 仓库结构
+Recommended install path:
 
 ```text
-repo-root/
-├── README.md
-├── GITHUB_PUBLISHING.md
-└── skills/
-    └── auto-video-editing-workflow/
-        ├── SKILL.md
-        ├── agents/
-        │   └── openai.yaml
-        ├── references/
-        │   ├── workflow.md
-        │   ├── style-rules.md
-        │   ├── finance-explainer.md
-        │   └── local-setup.md
-        └── scripts/
-            ├── check-video-workflow.ps1
-            └── setup-video-workflow.ps1
-```
-
-## 同事安装提示词
-
-```text
-请从 GitHub 安装这个 skill：
 richenyu/codex-auto-video-editing-workflow-skill/skills/auto-video-editing-workflow
 ```
 
-## 第一次使用提示词
+## Publishing Goal
+
+This repository should be installable as a Codex skill by collaborators. It should preserve the latest automatic video editing workflow and bottom logic without requiring the user to retrain Codex in every new chat.
+
+## Public-Facing Name
+
+Recommended English name:
 
 ```text
-用 $auto-video-editing-workflow 自动剪最新口播视频；如果环境缺工具，先帮我检查并安装依赖。
+Codex Auto Video Editing Workflow
 ```
 
-## 第一次会发生什么
+Optional Chinese display name:
 
 ```text
-1. Codex 读取 Skill 主规则和参考文件
-2. Codex 检查 FFmpeg、Python、MoviePy、auto-editor、输入输出目录
-3. 如果缺工具，Codex 说明缺什么
-4. 用户授权后，Codex 才运行 setup-video-workflow.ps1
-5. 依赖准备好后，再按底层逻辑自动剪视频
+Codex 自动视频剪辑工作流
 ```
 
-## 安全说明
+## Install Prompt For Collaborators
 
-Skill 不应该在安装瞬间静默下载软件。下载 FFmpeg、安装 Python 包、创建本地工具目录，都需要 Codex 说明并获得用户授权。
+```text
+Please install this skill from GitHub:
+richenyu/codex-auto-video-editing-workflow-skill/skills/auto-video-editing-workflow
+```
 
-## 备注
+## First Task Prompt
 
-这个仓库提供的是“可安装 Skill + 工作流规则 + 检查/安装脚本”。如果要让同事电脑剪出和原机器几乎一样的效果，还需要同步核心剪辑代码、BGM、字体、素材库、模型/转写配置。
+```text
+Use $auto-video-editing-workflow to edit the latest raw talking-head video according to the saved workflow. If tools or folders are missing, check the environment first and ask before installing dependencies.
+```
+
+## What Should Be Versioned
+
+Version these files:
+
+- `skills/auto-video-editing-workflow/SKILL.md`
+- `skills/auto-video-editing-workflow/agents/openai.yaml`
+- `skills/auto-video-editing-workflow/references/*.md`
+- `skills/auto-video-editing-workflow/scripts/*.ps1`
+- `README.md`
+- `INSTALL.md`
+- `SEO_KEYWORDS.md`
+- `.gitignore`
+
+Do not version local generated videos, raw oral footage, private BGM files, temporary QA screenshots, `.venv`, or downloaded FFmpeg binaries.
+
+## Safety Boundary
+
+The skill may include setup scripts, but Codex must not silently download or install dependencies. It should explain what is missing and request approval before running setup commands that download FFmpeg, install Python packages, or create local tool folders.
+
+## Release Checklist
+
+- README is readable English, not mojibake.
+- `SKILL.md` has clear frontmatter and trigger terms.
+- References include the latest non-regression rules.
+- The skill explicitly preserves cumulative rules.
+- SEO keywords are present.
+- `.gitignore` excludes raw media and generated outputs.
+- GitHub remote is correct.
+- The pushed branch matches the intended install branch.

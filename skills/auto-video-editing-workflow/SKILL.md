@@ -1,136 +1,116 @@
 ---
 name: auto-video-editing-workflow
-description: Codex自动剪视频神器。用于自动剪辑口播短视频、竖屏讲解视频、财经/商业/技术解释视频。Use when Codex is asked to edit talking-head footage, cut the latest recorded video, process oral video footage, remove pauses and repeated speech, apply a saved video-editing workflow, add large dynamic B-roll/materials, captions, light upbeat BGM, light SFX, check/install local video-editing dependencies, or export final MP4 with QA.
+description: Automatic short-form video and talking-head editing workflow. Use when Codex is asked to edit raw talking-head footage, cut the latest recorded video, apply a saved video-editing workflow or bottom logic, process oral video footage, remove pauses and repeated speech, build finance/business/technical explainer videos, match large B-roll and dynamic materials, add captions, add light upbeat BGM, add light varied SFX, export a clean no-caption/no-BGM variant, or run video QA. Also use in new windows when the user says the new oral video is already in the folder and wants the saved workflow applied.
 ---
 
-# Codex自动剪视频神器
+# Auto Video Editing Workflow
 
-把原始口播、讲稿、主题说明自动剪成更适合发布的竖屏短视频。
+Use this skill to turn raw oral/talking-head footage, a manuscript, or a topic brief into a polished vertical short video.
 
-## 新窗口触发规则
+## New Window Contract
 
-只要用户说到下面这类话，立即使用这个 Skill，不要让用户重新解释底层逻辑：
+If the user mentions any of these ideas, use this skill immediately instead of asking them to retrain the workflow:
 
 ```text
-自动剪视频 / 口播视频 / 最新口播 / 新视频放到文件夹了
-按底层逻辑剪 / 按工作流剪 / 按训练好的规则剪
-剪成片 / 加字幕 / 加 BGM / 加音效
-财经讲解 / 商业讲解 / 技术解释视频 / talking-head video
-auto edit this video / edit the latest video
+automatic video editing
+talking-head video
+oral video
+latest raw video
+new video is in the folder
+edit according to previous bottom logic
+use the trained workflow
+captions / BGM / SFX
+finance explainer
+business explainer
+technical explainer
+自动剪视频
+口播视频
+最新口播
+新视频放到文件夹
+按之前底层逻辑剪
+按训练好的工作流剪
+字幕 / 配乐 / 音效
+财经 / 商业 / 技术讲解视频
 ```
 
-先读取 `references/local-setup.md`，再用脚本检查当前电脑环境。如果当前项目有自己的工作流记忆、底层逻辑或素材索引，也要优先读取：
+Rules are cumulative. A new user correction adds to the active rule stack. It does not erase older locked rules unless the user explicitly cancels that specific rule.
+
+## Quick Loading Guide
+
+Load only what the current task needs:
+
+- For a real edit: read `references/workflow.md`.
+- For visual material, cutaway, BGM, SFX, and style decisions: read `references/style-rules.md`.
+- For the locked bottom logic and latest non-negotiable rules: read `references/bottom-logic.md`.
+- For finance, stock market, macro, or business explainers: read `references/finance-explainer.md`.
+- For local folders, environment checks, setup, and handoff conventions: read `references/local-setup.md`.
+- Before any formal delivery: read `references/non-regression-checklist.md`.
+
+If a host project has its own memory files, also read its context pack, asset index, and video editing logic before editing.
+
+## Core Order Of Work
+
+Do the work in this order:
 
 ```text
-<project-memory-root>/04_new_window_context_pack.md
-<project-memory-root>/08_video_editing_logic.md
-<project-memory-root>/07_asset_index.md
+1. Understand the topic, audience, point of view, and story.
+2. Locate the intended source video.
+3. Transcribe or inspect the speech timeline.
+4. Clean the speech first: repeated lines, restarts, wrong takes, dead air, weak fragments.
+5. Build a smooth spoken timeline before adding visuals.
+6. Apply the default talking-head tempo: 1.2x after cleanup, with pitch preserved.
+7. Match or generate materials only after the sped-up clean timeline exists.
+8. Select materials with two equal gates: beauty and sentence-level relevance.
+9. Render varied visual roles: face, overlay, feature, full_card, full_broll/cutaway.
+10. Add clear captions, low-volume upbeat BGM, and light varied SFX by default.
+11. Export a clean no-caption/no-BGM version when useful.
+12. Run rule audit, contact sheet, media QA, and volume QA before delivery.
 ```
 
-如果当前目录不是视频项目，但任务明显是自动剪视频，要路由回这个 Skill 和已配置的视频剪辑项目。
+Never use materials, motion, BGM, or SFX to hide a broken speech timeline.
 
-## 核心流程
+## Hard Rules
 
-严格按这个顺序做：
+Treat these as QA failure conditions:
 
-```text
-1. 先理解主题、受众、观点和故事线。
-2. 先清理口播：重复、重说、错误 take、停顿、废话、弱信息片段。
-3. 先做顺畅的口播时间线，再加视觉素材。
-4. 清理完成后默认把口播调成 1.2x 语速，并保持音调正常。
-5. 在 1.2x 干净时间线基础上，再匹配或生成素材。
-6. 素材必须同时满足：美观 + 和当前句子相关。
-7. 画面节奏要变化：真人、叠加、重点资料、全屏 cutaway。
-8. 默认只加轻量、多样的音效。
-9. 正式发布版默认加清晰字幕、轻快 BGM。
-10. 有需要时导出无字幕/无 BGM 的干净版。
-11. 交付前必须 QA 和规则审计。
-```
+- Clean speech first.
+- Default oral speed is `1.2x` after cleanup. Preserve pitch.
+- Formal publish exports default to captions, low-volume upbeat BGM, and light varied SFX.
+- BGM should come from the user's configured BGM folder. Do not rely on hard-coded generated tracks.
+- Materials must be both beautiful and sentence-matched.
+- Material match is sentence-level, not broad-topic.
+- Do not reuse the same material source asset in one finished video.
+- Material moments must be dynamic. Static stills are source material only; final inserts must be visibly video-like.
+- Prefer real video, screen recordings, official pages, realistic footage, GIF-like clips, or AI video over static image motion.
+- No tiny pill labels, stickers, or floating text chips on or near the speaker's face.
+- Use large readable overlays and large material shots.
+- A full-screen cutaway may fully cover the speaker while the user's voice continues.
+- For a 2-minute business, finance, or technical explainer, plan roughly 5-7 real or video-like full-screen cutaways when enough strong materials exist.
+- Do not count pure slide cards, chart cards, or opinion cards as real `full_broll`.
+- Avoid English fake UI and large English fake dashboards unless the real source itself is English.
+- Do not make the whole video feel like PPT, a dashboard slideshow, or card-stack animation.
+- Before final delivery, create a rule audit and a contact sheet. If the audit fails, revise and rerun QA.
 
-不要用素材、动效或音效去掩盖一个没剪干净的口播时间线。
+## Default Output
 
-## 硬规则
+- Vertical `9:16`, `1080x1920`, stable `30fps` MP4.
+- Final publish version with burned captions, BGM, and light SFX.
+- Clean handoff version without captions and without BGM when useful.
+- Report or JSON audit with speech speed, material count, material source uniqueness, material ratios, SFX count, BGM path, decode QA, and volume QA.
+- Contact sheet for visual inspection.
 
-这些是 QA 失败条件，不是可有可无的偏好：
+## Local Setup
 
-- 必须先清理口播；不能用画面遮盖重复、错误或废话。
-- 口播默认 `1.2x` 语速。必须在清理口播之后、字幕/B-roll/BGM/SFX/QA 之前应用。用音频 tempo 处理保持音调正常，不要让声音变尖。
-- 正式发布版默认有烧录字幕、低音量轻快 BGM、轻量多样音效。
-- 素材必须同时通过两个门槛：好看、和当前句子强相关。
-- 禁止贴脸小标签、小贴纸、小药丸字卡。它们不算合格的小特效。
-- 资料镜头要大块、精致、可读。优先使用视频化素材、动态卡片、GIF 感动效、网页滚动、图表动效、UI 演示、推近、高亮、真实 footage。
-- 资料镜头可以 1 个、2 个，偶尔 3 个同屏，但必须有主次、保持大块、不能变成碎贴纸。
-- 2 分钟左右的商业/财经/技术解释视频，默认规划 5-7 个真实或视频化全屏 cutaway，通常目标为 6 个。纯图表卡、观点卡、PPT 卡不计入真实 cutaway。
-- 交付前必须生成规则审计和抽帧检查；如果审计失败，要修改后重新 QA。
+Run the environment check script when the computer or project state is unknown:
 
-## 参考文件加载
-
-按需读取，不要一次性加载所有内容：
-
-- 任何真实剪辑任务：读 `references/workflow.md`
-- 视觉、素材、音效判断：读 `references/style-rules.md`
-- 财经、股票、宏观、商业解释视频：读 `references/finance-explainer.md`
-- 本地路径、启动检查、安装依赖、交付约定：读 `references/local-setup.md`
-- 如果宿主项目有长期记忆，也读取 context、bottom logic、asset index
-
-## 默认行为
-
-- 默认格式：竖屏 9:16，`1080x1920`，稳定 `30fps` MP4。
-- 默认字幕：正式成片烧录清晰字幕，除非用户要求不要字幕。
-- 默认语速：口播清理后统一 `1.2x`，字幕、cutaway、卡片、BGM、SFX、报告和 QA 都以加速后的时间线为准。
-- 默认音乐：加低音量、轻快、无歌词 BGM，除非用户要求不要 BGM。
-- 默认音效：轻量、多样、低于人声。
-- 默认真人画面：可轻微背景虚化或压暗，但脸、眼睛、嘴不能被遮挡。
-
-如果本地路径或项目脚本缺失，先询问或推断输入目录、输出目录和项目目录。
-
-## 剪辑工作流
-
-1. 定位源视频。如果用户说“最新”，按输入文件夹修改时间选择最新视频；如果有多个接近时间的候选，先确认。
-2. 转写口播，尽量使用停顿感知或词级时间戳。
-3. 判断重复前，先修正常见 ASR 错误，尤其是公司名、金融术语、股票代码、同音词。
-4. 先做文稿级审查再剪：
-   - 删除重复观点；
-   - 删除半句话开头，保留后面完整句；
-   - 修剪句内重启；
-   - 保留“第一、第二、第三、最后”等结构标记。
-5. 如果用户提供正式稿，把它作为软对齐参考，不要机械逐字硬切。
-6. 默认把干净口播时间线调成 `1.2x`，保持音调正常，并重算所有后续时间点。
-7. 在加速后的干净时间线上匹配或生成主题素材。
-8. 画面布局要变化：
-   - `face`：建立信任、表达情绪、转场、喘息；
-   - `overlay`：轻量补充信息；
-   - `feature`：大块重点资料；
-   - `full_card`：少量全屏框架、图表或观点卡；
-   - `full_broll` / `cutaway`：真实全屏素材，如照片、视频、网页、产品、建筑、地图、场景。
-9. 在资料进入、转场、重点强调时加入多样轻音效。
-10. 基于加速后的干净时间线生成字幕，再混入低音量 BGM。
-11. 最终重新编码为稳定 30fps。
-12. QA：媒体参数、完整解码、音量、字幕可读性、抽帧、布局分布、BGM 音量、语速、音效事件。
-
-## 素材原则
-
-素材必须匹配当前句子，而且必须好看。没有合适素材时，宁可保留真人画面或生成干净设计图，也不要塞入模糊、丑、带水印、不相关的素材。
-
-两个门槛同等重要：
-
-- 相关性：必须直接连接当前句子、例子、公司、产品、地点、市场、类比或观点。
-- 美观性：必须清晰、分辨率够、构图干净、现代、手机上看得舒服。
-
-财经和商业解释视频不能整条都做成 PPT 动画。要混合真人、视频化素材、截图、图表、照片、动态解释图、全屏真实 cutaway 和少量卡片。
-
-## 工具脚本
-
-运行下面脚本检查当前电脑是否有必要目录、项目代码和核心工具：
-
-```text
+```powershell
 scripts/check-video-workflow.ps1
 ```
 
-在新 Windows 电脑上，如果缺少依赖，先向用户说明并请求授权，再运行：
+On a new Windows computer, if required tools are missing, explain what is missing and ask for permission before running:
 
-```text
+```powershell
 scripts/setup-video-workflow.ps1
 ```
 
-安装脚本可以创建工作目录、下载 FFmpeg、创建 Python 虚拟环境，并安装 MoviePy、auto-editor 等核心剪辑包。Skill 不应该静默下载或安装软件。
+The setup script may create folders, download FFmpeg, create a Python virtual environment, and install editing packages. Do not silently download or install tools.

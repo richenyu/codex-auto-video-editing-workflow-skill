@@ -1,83 +1,104 @@
-# Codex自动剪视频神器
+# Codex Auto Video Editing Workflow
 
-这是一个可安装到 Codex 的自动剪视频 Skill，用来把口播、讲解、财经/商业/技术类短视频自动剪成更适合发布的竖屏成片。
+An installable Codex skill for automated short-form talking-head video editing.
 
-## 它能做什么
+This repository packages the editing workflow, visual rules, QA checklist, local setup guidance, and helper scripts that let Codex turn raw oral footage into a polished vertical video with speech cleanup, captions, upbeat BGM, light SFX, and sentence-matched dynamic materials.
 
-这个 Skill 会让 Codex 按一套固定工作流剪视频：
+## What This Skill Does
 
-- 先清理口播：停顿、重复、重说、废话、错误片段、弱信息片段
-- 口播清理完成后，默认把语速调成 `1.2x`，并保持音调正常
-- 自动规划大块资料镜头，避免贴脸小标签、小贴纸、小药丸字卡
-- 资料镜头优先做成动态卡片、真实 cutaway、网页/产品/图表/截图/视频化素材
-- 需要时可以 1/2/3 个资料同屏，但必须大块、美观、有主次
-- 默认添加清晰字幕、轻快 BGM、轻量音效
-- 默认导出竖屏 `1080x1920` MP4
-- 导出前做规则审计、抽帧检查、音量检查、解码检查
-- 第一次使用时可以检查并引导安装 FFmpeg、MoviePy、auto-editor 等剪辑依赖
+- Finds the intended raw talking-head video, including the latest file in a configured input folder.
+- Cleans speech first: pauses, restarts, repeated phrases, wrong takes, weak fragments, and duplicate ideas.
+- Builds a smooth spoken timeline before adding visuals.
+- Applies the default talking-head speed of `1.2x` after cleanup, with pitch preserved.
+- Adds captions, low-volume upbeat BGM, and light varied SFX by default for publishable exports.
+- Plans large visual materials instead of tiny stickers or face-adjacent labels.
+- Matches every material to the current sentence, not just the broad topic.
+- Uses a balanced rhythm between the speaker and visual materials.
+- Prefers real video, screen recordings, official pages, realistic footage, GIF-like clips, or strong cinematic motion over static images.
+- Runs QA with media checks, contact sheets, volume checks, and a rule audit before delivery.
 
-## 安装方式
+## Core Editing Philosophy
 
-让同事在 Codex 里输入：
+The workflow is built around one hard rule:
 
 ```text
-请从 GitHub 安装这个 skill：
+Clean the speech first. Never use visuals, music, or effects to hide a broken oral timeline.
+```
+
+After that, visual materials must pass two equal gates:
+
+```text
+Beauty gate + sentence relevance gate
+```
+
+A material should look good on a phone and match the exact sentence being spoken. If a relevant material is ugly, reject it. If a beautiful material is off-topic, reject it.
+
+## Current Locked Style Rules
+
+- Default final format: vertical `1080x1920`, `30fps`, MP4.
+- Default oral speed: `1.2x` after cleanup.
+- Default publish export: burned captions, light upbeat lyric-free BGM, and light varied SFX.
+- Default clean handoff export: no captions and no BGM when useful.
+- Use large overlays and large cutaways; no tiny stickers, pill labels, or face clutter.
+- For 1-3 minute business, finance, and technical explainers, aim for a balanced speaker/material rhythm.
+- For a roughly 2-minute explainer, plan around 5-7 real or video-like full-screen cutaways when enough strong materials exist.
+- Do not count pure slide cards, chart cards, or opinion cards as real `full_broll`.
+- Do not reuse the same source asset inside one finished video.
+- Chinese-first visual rule: avoid large English fake UI or fake dashboards unless the real source itself is in English.
+- Do not turn the whole video into PPT, dashboard panels, or card-stack animations.
+- Static images may be used as source material, but the final video must make them visibly video-like with strong motion.
+
+## Install From GitHub
+
+Ask Codex to install this skill:
+
+```text
+Please install this skill from GitHub:
 richenyu/codex-auto-video-editing-workflow-skill/skills/auto-video-editing-workflow
 ```
 
-如果仓库是私有的，先给同事开 GitHub 访问权限。
+If the repository is private, give the collaborator GitHub access first.
 
-## 第一次使用
+## First Use Prompt
 
-安装后，让同事在 Codex 里输入：
-
-```text
-用 $auto-video-editing-workflow 自动剪最新口播视频；如果环境缺工具，先帮我检查并安装依赖。
-```
-
-第一次运行时，Codex 会先检查本机环境：
+After installation, a collaborator can say:
 
 ```text
-scripts/check-video-workflow.ps1
+Use $auto-video-editing-workflow to edit the latest raw talking-head video. If this computer is missing tools, check the environment first and ask before installing dependencies.
 ```
 
-如果缺少依赖，Codex 会先说明缺什么，再请求授权运行：
+Codex should then:
+
+1. Read the skill.
+2. Load the relevant references.
+3. Check local paths and tools.
+4. Ask before downloading or installing anything.
+5. Edit the video only after the environment is ready.
+
+## Repository Structure
 
 ```text
-scripts/setup-video-workflow.ps1
+skills/auto-video-editing-workflow/
+  SKILL.md
+  agents/openai.yaml
+  references/
+    workflow.md
+    style-rules.md
+    bottom-logic.md
+    finance-explainer.md
+    local-setup.md
+    non-regression-checklist.md
+  scripts/
+    check-video-workflow.ps1
+    setup-video-workflow.ps1
 ```
 
-这个安装脚本可以创建工作目录、下载 FFmpeg、创建 Python 虚拟环境，并安装 MoviePy、auto-editor 等依赖。它不会在没有说明和授权的情况下偷偷下载软件。
+## SEO Keywords
 
-## 重要边界
+Codex video editing skill, AI video editing workflow, automatic talking-head video editing, short-form video automation, vertical video editor, AI B-roll matching, Chinese short video workflow, finance explainer video editing, business explainer video editing, video captions BGM SFX automation, Codex skill for video editing.
 
-这个 Skill 保存的是“剪辑工作流、审美规则、QA 规则、环境检查脚本和安装脚本”，它本身不是完整剪辑软件。
+## Important Boundary
 
-要在同事电脑上做到一句话自动成片，还需要：
+This repository stores the workflow and skill instructions. It is not a complete video editing product by itself.
 
-- 一个口播原视频输入文件夹
-- 一个成片输出文件夹
-- FFmpeg
-- Python 和相关剪辑包
-- 兼容的剪辑脚本或自动剪辑工程
-- 可选的 BGM、字体、素材库、转写模型配置
-
-这些配置好之后，以后就可以直接说：
-
-```text
-用 $auto-video-editing-workflow 自动剪最新视频。
-```
-
-## Skill 位置
-
-```text
-skills/auto-video-editing-workflow
-```
-
-## 对外名称
-
-对外可以直接叫：
-
-```text
-Codex自动剪视频神器
-```
+To produce finished videos on another computer, that computer still needs configured input/output folders, FFmpeg, Python packages, optional transcription tools, BGM files, fonts, media assets, and compatible editing scripts.

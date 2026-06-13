@@ -1,72 +1,95 @@
-# 本地环境配置
+# Local Setup
 
-这个 Skill 是可迁移的。所有路径都应该视为项目配置，不要写死在某一台电脑上。
+This skill is portable. Do not hard-code one computer's paths unless the host project explicitly provides them.
 
-## 推荐 Windows 通用目录
+## Generic Windows Workspace
 
-如果当前电脑没有项目专用路径，默认使用用户目录下的工作区：
+If no host project paths are configured, use a workspace like:
 
 ```text
-项目根目录：
+Project root:
 %USERPROFILE%\auto-video-editing-workflow
 
-原始口播输入目录：
+Raw talking-head input:
 %USERPROFILE%\auto-video-editing-workflow\input
 
-成片输出目录：
+Final output:
 %USERPROFILE%\auto-video-editing-workflow\output
 
-BGM 目录：
+BGM library:
 %USERPROFILE%\auto-video-editing-workflow\bgm
 
-工具目录：
+Tools:
 %USERPROFILE%\auto-video-editing-workflow\tools
 
-Python 虚拟环境：
+Python venv:
 %USERPROFILE%\auto-video-editing-workflow\.venv
 ```
 
-如果用户说“新口播已经放到文件夹里了”或“剪最新视频”，按输入目录的 `LastWriteTime` 选择最新视频；如果多个文件时间接近，先确认。
+## User's Known Windows Profile
 
-## 需要配置的路径
-
-如果无法自动推断，向用户确认这些路径：
+When this skill is used on the original user's machine, the preferred folders are:
 
 ```text
-原始口播输入目录：
-<path-to-raw-talking-head-videos>
+Raw oral video input:
+D:\自动剪视频口播
 
-成片输出目录：
-<path-to-final-video-exports>
+Final video output:
+D:\自动剪视频成片
 
-BGM 目录：
-<path-to-default-bgm-library>
+BGM folder:
+D:\自动剪视频BGM
 
-项目代码目录：
-<path-to-auto-video-editing-code>
+Main project:
+D:\CodecX全项目管理\P08_C02_自动剪视频_auto_video_editing
 
-项目记忆或工作流说明：
-<path-to-video-editing-workflow-notes>
+Editing code:
+D:\CodecX全项目管理\P08_C02_自动剪视频_auto_video_editing\50_代码_code\auto_talk_cut_mvp
 ```
 
-## 新电脑第一次启动
+Project memory files to read when available:
 
-安装 Skill 只会给 Codex 提供工作流、规则和脚本，不会在安装瞬间静默下载软件。新 Windows 电脑上，Codex 应该：
+```text
+04_新窗口上下文_context_pack.md
+08_短视频自动剪辑底层逻辑_video_editing_logic.md
+07_核心资产索引_asset_index.md
+```
 
-1. 读取 `SKILL.md`、`references/workflow.md` 和本文件。
-2. 运行 `scripts/check-video-workflow.ps1` 检查目录、FFmpeg、Python、项目代码和工作流文件。
-3. 如果缺少工具，先说明缺什么，再请求授权运行 `scripts/setup-video-workflow.ps1`。
-4. 根据需要运行安装脚本，例如：
+## Latest Video Selection
+
+When the user says "latest video" or "new video is in the folder":
+
+1. Sort configured input folder videos by modification time.
+2. If one file is clearly newest, use it.
+3. If several files are close in time or the user mentioned a number/name, inspect filenames and timestamps.
+4. Ask only if ambiguity could cause editing the wrong source.
+
+## First Run On A New Computer
+
+Installing the skill only installs instructions and scripts. It does not install FFmpeg or Python packages by itself.
+
+Codex should:
+
+1. Read `SKILL.md`, `workflow.md`, and this file.
+2. Run:
+
+```powershell
+scripts/check-video-workflow.ps1
+```
+
+3. Explain missing folders or tools.
+4. Ask before running setup.
+5. If approved, run:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts\setup-video-workflow.ps1 -DownloadFfmpeg -InstallPythonPackages -WithTranscription
 ```
 
-安装脚本可以创建工作目录、下载 FFmpeg、创建 Python 虚拟环境，并安装 MoviePy、auto-editor 等核心剪辑包。网络下载和包安装必须明确说明并获得授权。
+Setup may create folders, download FFmpeg, create a Python virtual environment, and install packages such as MoviePy and auto-editor. Network downloads and package installs require explicit user approval.
 
-## 兼容项目脚本
+## Common Host Project Scripts
 
-如果宿主项目已经有自动剪辑实现，优先寻找：
+If the host project already has automation, prefer existing scripts and patterns. Common names:
 
 ```text
 scripts/smart_talk_editor.py
@@ -75,7 +98,7 @@ tools/ffmpeg/bin/ffmpeg.exe
 .venv/Scripts/python.exe
 ```
 
-兼容实现中常用参数：
+Common parameters in compatible projects:
 
 ```text
 --reference-script
@@ -95,31 +118,13 @@ tools/ffmpeg/bin/ffmpeg.exe
 --speech-speed 1.2
 ```
 
-## 财经/商业解释视频常用参数
+## Delivery
 
-```text
---visual-mode overlay
---overlay-style showcase
---base-motion
---background-blur-mode fast
---background-blur-sigma 10
---background-blur-dim 0.74
---broll-every 1
---broll-layout-bias feature
---max-assets-per-chunk 1
---no-fill-overlay-assets
---hook-face-duration 2.2
---broll-min-gap 1.05
---max-consecutive-broll 2
---speech-speed 1.2
-```
+After QA, copy final user-facing files to the configured output folder:
 
-## BGM 规则
+- final MP4 with captions/BGM/SFX;
+- clean MP4 when useful;
+- contact sheet;
+- rule audit JSON or report.
 
-使用用户配置的 BGM 目录里的音乐，不要假设固定默认曲目。
-
-BGM 必须低于人声，淡入淡出；如果录音环境噪声明显，进一步降低 BGM。BGM 目录为空时，询问用户添加音乐，或者导出无 BGM 版本。
-
-## 交付
-
-QA 完成后，把最终 MP4 和抽帧图复制到配置的输出目录。报告、音效事件 JSON 和中间文件保留在项目输出目录中。
+Keep intermediate files inside the project output folder.
