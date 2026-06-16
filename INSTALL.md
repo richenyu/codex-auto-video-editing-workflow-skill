@@ -49,10 +49,10 @@ input-folder/
 The manuscript can also be named:
 
 ```text
-文案.txt
-稿子.txt
 script.txt
 manuscript.txt
+draft.txt
+voiceover.txt
 ```
 
 For multi-part videos, use clear names such as:
@@ -66,15 +66,16 @@ topic_part2.txt
 
 The skill requires source preflight before merging multi-part videos.
 
-## Original User Folder Defaults
+## Portable Folder Defaults
 
-On the original Windows setup:
+Suggested portable layout:
 
 ```text
-Input:   D:\自动剪视频口播
-Output:  D:\自动剪视频成片
-BGM:     D:\自动剪视频BGM
-Project: D:\CodecX全项目管理\P08_C02_自动剪视频_auto_video_editing
+Input:   <workspace>\input
+Output:  <workspace>\output
+BGM:     <workspace>\bgm
+Project: <workspace>\code
+Reports: <workspace>\reports
 ```
 
 Other computers can use equivalent folders. The setup scripts accept custom paths.
@@ -91,8 +92,6 @@ PIXABAY_API_KEY
 UNSPLASH_ACCESS_KEY
 GETTY_API_KEY
 SHUTTERSTOCK_API_TOKEN
-HELLORF_CLIENT_ID
-HELLORF_CLIENT_SECRET
 ```
 
 Do not commit `.env.local`, raw videos, BGM, downloaded stock assets, QA images, or generated outputs.

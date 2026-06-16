@@ -14,18 +14,12 @@ richenyu/codex-auto-video-editing-workflow-skill/skills/auto-video-editing-workf
 
 ## Publishing Goal
 
-This repository should be installable as a Codex skill by collaborators. It preserves the latest automatic video editing workflow and bottom logic so the user does not need to retrain Codex in every new chat.
+This public English repository should be installable as a Codex skill by collaborators. It preserves a reusable automatic video editing workflow without requiring users to copy a long prompt into every new chat.
 
 ## Public Name
 
 ```text
 Codex Auto Video Editing Workflow Skill
-```
-
-Optional Chinese display name:
-
-```text
-Codex 自动视频剪辑工作流
 ```
 
 ## Repository Metadata
@@ -54,7 +48,7 @@ finance-explainer
 business-explainer
 ```
 
-Public-facing docs should be English-first. The skill may still contain Chinese trigger phrases, Chinese folder names, and Chinese bottom-logic references because the source workflow is used for Chinese oral videos and Chinese creator commands.
+Public-facing docs in this repository should stay English-only. Use the Chinese edition repository for Chinese commands, Chinese SEO, Chinese folder conventions, and Chinese locked-rule notes.
 
 ## Install Prompt For Collaborators
 
@@ -93,8 +87,7 @@ Use $auto-video-editing-workflow to edit the latest raw talking-head video accor
 ## Release Checklist
 
 - `SKILL.md` has valid frontmatter and broad trigger terms.
-- `references/bottom-logic.md` is synced from the latest P08 bottom logic.
-- README and INSTALL mention the current 4:3 default and custom aspect overrides.
+- README and INSTALL mention the current 4:3 default and aspect overrides.
 - The non-regression checklist preserves old locked rules.
 - The workflow distinguishes real video cutaways from PPT-like MP4 files.
 - Stock/API material candidates require source manifests and visual QA.
