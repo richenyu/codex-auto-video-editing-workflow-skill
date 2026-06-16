@@ -1,6 +1,9 @@
 .venv/
 __pycache__/
 *.pyc
+.env
+.env.local
+.env.*.local
 *.mp4
 *.mov
 *.mkv
@@ -17,3 +20,12 @@ output/
 input/
 bgm/
 tools/ffmpeg/
+models/
+cache/
+stock_api_cache/
+downloaded_stock*/
+source_media/
+raw_media/
+final_exports/
+qa/
+contact_sheets/

@@ -6,12 +6,22 @@ param(
     [string]$OutputDir = ""
 )
 
+function Join-Chars([int[]]$Codes) {
+    $chars = foreach ($code in $Codes) { [char]$code }
+    return -join $chars
+}
+
 function Default-ProjectRoot {
-    return (Join-Path $env:USERPROFILE "auto-video-editing-workflow")
+    $allProjects = Join-Chars @(0x5168,0x9879,0x76EE,0x7BA1,0x7406)
+    $autoVideo = Join-Chars @(0x81EA,0x52A8,0x526A,0x89C6,0x9891)
+    $code = Join-Chars @(0x4EE3,0x7801)
+    return "D:\CodecX$allProjects\P08_C02_${autoVideo}_auto_video_editing\50_${code}_code\auto_talk_cut_mvp"
 }
 
 function Default-MemoryRoot {
-    return (Join-Path (Default-ProjectRoot) "memory")
+    $allProjects = Join-Chars @(0x5168,0x9879,0x76EE,0x7BA1,0x7406)
+    $autoVideo = Join-Chars @(0x81EA,0x52A8,0x526A,0x89C6,0x9891)
+    return "D:\CodecX$allProjects\P08_C02_${autoVideo}_auto_video_editing"
 }
 
 function Default-SkillRoot {
@@ -19,11 +29,15 @@ function Default-SkillRoot {
 }
 
 function Default-InputDir {
-    return (Join-Path (Default-ProjectRoot) "input")
+    $autoVideo = Join-Chars @(0x81EA,0x52A8,0x526A,0x89C6,0x9891)
+    $talking = Join-Chars @(0x53E3,0x64AD)
+    return "D:\$autoVideo$talking"
 }
 
 function Default-OutputDir {
-    return (Join-Path (Default-ProjectRoot) "output")
+    $autoVideo = Join-Chars @(0x81EA,0x52A8,0x526A,0x89C6,0x9891)
+    $finalVideo = Join-Chars @(0x6210,0x7247)
+    return "D:\$autoVideo$finalVideo"
 }
 
 if (-not $ProjectRoot) { $ProjectRoot = Default-ProjectRoot }
@@ -41,13 +55,13 @@ if (-not $AssetIndex) { $AssetIndex = Join-Path $MemoryRoot "07_*asset_index.md"
 
 $items = @(
     @{ Label = "Project root"; Path = $ProjectRoot; Type = "Directory" },
-    @{ Label = "Workflow memory root"; Path = $MemoryRoot; Type = "Directory" },
+    @{ Label = "P08 memory root"; Path = $MemoryRoot; Type = "Directory" },
     @{ Label = "Installed skill root"; Path = $SkillRoot; Type = "Directory" },
     @{ Label = "Input folder"; Path = $InputDir; Type = "Directory" },
     @{ Label = "Output folder"; Path = $OutputDir; Type = "Directory" },
-    @{ Label = "Workflow context pack"; Path = $ContextPack; Type = "File" },
-    @{ Label = "Workflow bottom logic"; Path = $BottomLogic; Type = "File" },
-    @{ Label = "Workflow asset index"; Path = $AssetIndex; Type = "File" },
+    @{ Label = "P08 context pack"; Path = $ContextPack; Type = "File" },
+    @{ Label = "P08 bottom logic"; Path = $BottomLogic; Type = "File" },
+    @{ Label = "P08 asset index"; Path = $AssetIndex; Type = "File" },
     @{ Label = "Skill entry"; Path = (Join-Path $SkillRoot "SKILL.md"); Type = "File" },
     @{ Label = "Skill workflow reference"; Path = (Join-Path $SkillRoot "references\workflow.md"); Type = "File" },
     @{ Label = "Skill style rules"; Path = (Join-Path $SkillRoot "references\style-rules.md"); Type = "File" },

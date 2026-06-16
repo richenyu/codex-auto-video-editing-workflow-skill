@@ -1,12 +1,12 @@
 # GitHub Publishing Notes
 
-Recommended repository:
+Repository:
 
 ```text
 richenyu/codex-auto-video-editing-workflow-skill
 ```
 
-Recommended install path:
+Install path:
 
 ```text
 richenyu/codex-auto-video-editing-workflow-skill/skills/auto-video-editing-workflow
@@ -14,14 +14,12 @@ richenyu/codex-auto-video-editing-workflow-skill/skills/auto-video-editing-workf
 
 ## Publishing Goal
 
-This repository should be installable as a Codex skill by collaborators. It should preserve the latest automatic video editing workflow and bottom logic without requiring the user to retrain Codex in every new chat.
+This repository should be installable as a Codex skill by collaborators. It preserves the latest automatic video editing workflow and bottom logic so the user does not need to retrain Codex in every new chat.
 
-## Public-Facing Name
-
-Recommended English name:
+## Public Name
 
 ```text
-Codex Auto Video Editing Workflow
+Codex Auto Video Editing Workflow Skill
 ```
 
 Optional Chinese display name:
@@ -45,8 +43,6 @@ Use $auto-video-editing-workflow to edit the latest raw talking-head video accor
 
 ## What Should Be Versioned
 
-Version these files:
-
 - `skills/auto-video-editing-workflow/SKILL.md`
 - `skills/auto-video-editing-workflow/agents/openai.yaml`
 - `skills/auto-video-editing-workflow/references/*.md`
@@ -56,19 +52,25 @@ Version these files:
 - `SEO_KEYWORDS.md`
 - `.gitignore`
 
-Do not version local generated videos, raw oral footage, private BGM files, temporary QA screenshots, `.venv`, or downloaded FFmpeg binaries.
+## What Must Not Be Versioned
 
-## Safety Boundary
-
-The skill may include setup scripts, but Codex must not silently download or install dependencies. It should explain what is missing and request approval before running setup commands that download FFmpeg, install Python packages, or create local tool folders.
+- API keys and `.env.local`.
+- Raw oral footage.
+- Finished videos.
+- BGM files.
+- Downloaded stock media.
+- Temporary QA screenshots and contact sheets.
+- FFmpeg binaries, virtual environments, model caches, and generated output folders.
 
 ## Release Checklist
 
-- README is readable English, not mojibake.
-- `SKILL.md` has clear frontmatter and trigger terms.
-- References include the latest non-regression rules.
-- The skill explicitly preserves cumulative rules.
-- SEO keywords are present.
-- `.gitignore` excludes raw media and generated outputs.
-- GitHub remote is correct.
-- The pushed branch matches the intended install branch.
+- `SKILL.md` has valid frontmatter and broad trigger terms.
+- `references/bottom-logic.md` is synced from the latest P08 bottom logic.
+- README and INSTALL mention the current 4:3 default and custom aspect overrides.
+- The non-regression checklist preserves old locked rules.
+- The workflow distinguishes real video cutaways from PPT-like MP4 files.
+- Stock/API material candidates require source manifests and visual QA.
+- Source preflight is required before multi-part video merging.
+- Formal scripts are used for captions and visual timing when available.
+- `.gitignore` excludes raw/generated media and secrets.
+- Validation passes before pushing.

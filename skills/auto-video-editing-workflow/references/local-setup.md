@@ -1,95 +1,78 @@
 # Local Setup
 
-This skill is portable. Do not hard-code one computer's paths unless the host project explicitly provides them.
+This skill is portable. Treat all paths as project-specific configuration.
 
-## Generic Windows Workspace
+## Default Windows Setup For This User
 
-If no host project paths are configured, use a workspace like:
-
-```text
-Project root:
-%USERPROFILE%\auto-video-editing-workflow
-
-Raw talking-head input:
-%USERPROFILE%\auto-video-editing-workflow\input
-
-Final output:
-%USERPROFILE%\auto-video-editing-workflow\output
-
-BGM library:
-%USERPROFILE%\auto-video-editing-workflow\bgm
-
-Tools:
-%USERPROFILE%\auto-video-editing-workflow\tools
-
-Python venv:
-%USERPROFILE%\auto-video-editing-workflow\.venv
-```
-
-## User's Known Windows Profile
-
-When this skill is used on the original user's machine, the preferred folders are:
+When working on the user's current machine, use these defaults before asking for paths:
 
 ```text
-Raw oral video input:
+Raw input folder:
 D:\自动剪视频口播
 
-Final video output:
+User-facing output folder:
 D:\自动剪视频成片
 
-BGM folder:
+Default BGM folder:
 D:\自动剪视频BGM
 
-Main project:
+Project memory folder:
 D:\CodecX全项目管理\P08_C02_自动剪视频_auto_video_editing
 
-Editing code:
+Project code folder:
 D:\CodecX全项目管理\P08_C02_自动剪视频_auto_video_editing\50_代码_code\auto_talk_cut_mvp
+
+Current workflow entry:
+C:\Users\进步\Documents\自动前视频\CURRENT_AUTO_VIDEO_WORKFLOW_2026-06-13.md
 ```
 
-Project memory files to read when available:
+For new windows, if the user says "the new talking-head video is in the folder", sort `D:\自动剪视频口播` by `LastWriteTime` and use the latest video unless there is ambiguity.
+
+Before a real edit, read the P08 project context and bottom-logic files when present:
 
 ```text
-04_新窗口上下文_context_pack.md
-08_短视频自动剪辑底层逻辑_video_editing_logic.md
-07_核心资产索引_asset_index.md
+D:\CodecX全项目管理\P08_C02_自动剪视频_auto_video_editing\04_新窗口上下文_context_pack.md
+D:\CodecX全项目管理\P08_C02_自动剪视频_auto_video_editing\08_短视频自动剪辑底层逻辑_video_editing_logic.md
+D:\CodecX全项目管理\P08_C02_自动剪视频_auto_video_editing\07_核心资产索引_asset_index.md
 ```
 
-## Latest Video Selection
+## Configure These Paths
 
-When the user says "latest video" or "new video is in the folder":
+```text
+Raw input folder:
+<path-to-raw-talking-head-videos>
 
-1. Sort configured input folder videos by modification time.
-2. If one file is clearly newest, use it.
-3. If several files are close in time or the user mentioned a number/name, inspect filenames and timestamps.
-4. Ask only if ambiguity could cause editing the wrong source.
+User-facing output folder:
+<path-to-final-video-exports>
 
-## First Run On A New Computer
+Default BGM folder:
+<path-to-default-bgm-library>
 
-Installing the skill only installs instructions and scripts. It does not install FFmpeg or Python packages by itself.
+Project code folder:
+<path-to-auto-video-editing-code>
 
-Codex should:
-
-1. Read `SKILL.md`, `workflow.md`, and this file.
-2. Run:
-
-```powershell
-scripts/check-video-workflow.ps1
+Main project memory or workflow document:
+<path-to-video-editing-workflow-notes>
 ```
 
-3. Explain missing folders or tools.
-4. Ask before running setup.
-5. If approved, run:
+## Portable Bootstrap On A New Computer
+
+Skill installation gives Codex the workflow, rules, and bundled scripts. It does not silently install software by itself. On a new Windows computer, Codex should:
+
+1. Read `SKILL.md`, `references/workflow.md`, and this file.
+2. Run `scripts/check-video-workflow.ps1` to inspect folders, FFmpeg, Python, project code, and workflow files.
+3. If tools are missing, explain the missing items and request approval before running `scripts/setup-video-workflow.ps1`.
+4. Run setup with the switches needed for that machine, for example:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts\setup-video-workflow.ps1 -DownloadFfmpeg -InstallPythonPackages -WithTranscription
 ```
 
-Setup may create folders, download FFmpeg, create a Python virtual environment, and install packages such as MoviePy and auto-editor. Network downloads and package installs require explicit user approval.
+The setup script can create portable working folders, download FFmpeg, create a Python virtual environment, and install core video-editing packages including MoviePy and auto-editor. Network downloads and package installation should be explicit, not silent.
 
-## Common Host Project Scripts
+## Key Project Scripts
 
-If the host project already has automation, prefer existing scripts and patterns. Common names:
+If the host project contains an implementation similar to the original workflow, look for:
 
 ```text
 scripts/smart_talk_editor.py
@@ -98,7 +81,7 @@ tools/ffmpeg/bin/ffmpeg.exe
 .venv/Scripts/python.exe
 ```
 
-Common parameters in compatible projects:
+Useful options in compatible implementations:
 
 ```text
 --reference-script
@@ -115,16 +98,42 @@ Common parameters in compatible projects:
 --burn-subtitles
 --bgm <path-to-music-file>
 --bgm-volume <low-mix-value>
---speech-speed 1.2
 ```
 
-## Delivery
+## Typical Finance Explainer Parameters
 
-After QA, copy final user-facing files to the configured output folder:
+```text
+--visual-mode overlay
+--overlay-style showcase
+--base-motion
+--background-blur-mode fast
+--background-blur-sigma 10
+--background-blur-dim 0.74
+--broll-every 1
+--broll-layout-bias feature
+--max-assets-per-chunk 1
+--no-fill-overlay-assets
+--hook-face-duration 2.2
+--broll-min-gap 1.05
+--max-consecutive-broll 2
+```
 
-- final MP4 with captions/BGM/SFX;
-- clean MP4 when useful;
-- contact sheet;
-- rule audit JSON or report.
+## Default Local Music Beds
 
-Keep intermediate files inside the project output folder.
+On the original Windows setup, the reusable BGM folder is:
+
+```text
+D:\自动剪视频BGM
+```
+
+Use the current user-provided files in this folder. Do not assume fixed generated defaults:
+
+```text
+D:\自动剪视频BGM
+```
+
+Mix BGM below the voice, fade in/out, and lower the music further when the recording has room noise. The old generated BGM set has been rejected and should not be used as a fallback.
+
+## Handoff
+
+After final QA, copy the final MP4 and contact sheet to the configured output folder. Keep reports, SFX event JSON, and intermediate files inside the project output directory.

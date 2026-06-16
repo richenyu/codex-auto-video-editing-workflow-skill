@@ -1,6 +1,6 @@
 interface:
   display_name: "Codex Auto Video Editing Workflow"
-  short_description: "Edit talking-head short videos with saved workflow rules"
-  default_prompt: "Use $auto-video-editing-workflow to edit the latest raw talking-head video. If this computer is missing tools or folders, check the environment first and ask before installing dependencies."
+  short_description: "Edit talking-head explainers with saved workflow rules"
+  default_prompt: "Use $auto-video-editing-workflow to edit the latest raw talking-head video according to the saved workflow. If this computer is missing tools or folders, check the environment first and ask before installing dependencies."
 policy:
   allow_implicit_invocation: true

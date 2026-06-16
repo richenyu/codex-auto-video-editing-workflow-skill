@@ -1,22 +1,24 @@
 # Non-Regression Checklist
 
-Use this before any formal delivery.
+This checklist prevents newly trained preferences from erasing older locked rules. Treat it as a delivery gate, not a reminder.
 
 ## Rule Stack Contract
 
-New user feedback adds to the rule stack. It does not erase older locked rules unless the user explicitly cancels the older rule.
+New user corrections must be added to the active rule stack. They must not replace older rules unless the user explicitly says an older rule is cancelled.
 
-When adding a rule:
+When adding a new rule:
 
-1. Keep older rules active.
-2. State what behavior changes.
+```text
+1. State which old rules remain active.
+2. State which behavior the new rule changes.
 3. Add a QA item that can fail the export.
-4. Record the rule in the skill or project memory.
-5. Update the audit fields before the next delivery.
+4. Record the rule in the project memory or skill reference.
+5. Update the rule audit output before the next delivery.
+```
 
 ## Locked Rules
 
-Every formal talking-head edit must preserve:
+Every formal talking-head edit must preserve all of these unless the user overrides the specific item:
 
 ```text
 speech_cleanup_first
@@ -27,7 +29,6 @@ beauty_and_relevance_material_gate
 sentence_level_material_match_gate
 no_reused_material_assets_in_one_video
 dynamic_material_not_static_image_only
-real_or_video_like_materials_preferred
 no_tiny_face_stickers
 large_content_motion_overlays_on_face_moments
 video_like_materials_over_static_slides
@@ -38,13 +39,12 @@ multi_material_layout_when_useful
 varied_sfx_not_fixed_repetition
 background_blur_or_dim_when_useful
 no_visible_creator_style_label
-chinese_first_generated_visuals
-no_large_english_fake_ui
-no_ppt_dashboard_dominance
 contact_sheet_and_decode_qa
 ```
 
 ## Required Audit Fields
+
+Each delivery report should include these fields:
 
 ```text
 speech_cleanup_pass
@@ -59,11 +59,6 @@ unique_material_asset_count
 reused_material_asset_count
 static_image_only_count
 dynamic_material_count
-real_video_cutaway_count
-screen_recording_cutaway_count
-ai_video_cutaway_count
-animated_still_cutaway_count
-static_card_count
 speaker_visible_ratio
 material_dominant_ratio
 full_broll_count
@@ -71,9 +66,7 @@ video_like_cutaway_count
 content_motion_overlay_count
 multi_material_layout_count
 tiny_sticker_violation_count
-english_fake_ui_violation_count
 ppt_like_material_violation_count
-weak_pan_zoom_only_count
 caption_face_overlap_pass
 decode_pass
 volume_mean
@@ -83,29 +76,29 @@ contact_sheet_path
 
 ## Hard Failure Examples
 
-Do not deliver as a finished version if:
+Do not deliver if any of these are true:
 
-- speech still contains obvious repeated or wrong lines;
-- materials are used to hide broken speech;
-- the edit mostly becomes a static slideshow;
-- generated visuals contain large fake English UI;
-- the whole video feels like PPT, dashboards, or card stacks;
-- the same material asset appears twice;
-- material does not match the current sentence;
-- still images only receive weak pan/zoom;
-- tiny stickers or pill labels appear near the face;
-- BGM ignores the user's configured BGM folder;
-- captions block the face, mouth, or key material text;
-- creator reference names appear visibly in the video.
+```text
+New visual style removes previously required talking-head overlays.
+New cinematic images make the edit mostly static slideshow.
+New full-screen cutaways remove the balanced face/material rhythm.
+New overlays become tiny pill labels or sit near the face.
+New BGM choice ignores the user's BGM folder rule.
+New material density hides an unclean speech timeline.
+New template counts full cards or chart cards as real cutaways.
+New creator reference appears as visible "X-style" text.
+New material pass repeats the same asset later in the same video.
+New material pass uses broad-topic visuals that do not match the exact sentence.
+New material pass uses still pictures without visible video/GIF-like motion.
+```
 
 ## Final Self-Check
 
-Before final response:
+Before the final answer, compare the output against the active rule stack:
 
 ```text
 No old locked rule was silently dropped.
-The newest user correction is represented in QA.
-The audit proves the rule with counts or ratios where possible.
-The contact sheet supports the audit.
-The final file exists in the delivery folder.
+New user correction was added as a QA field.
+The audit file proves the rule with counts or ratios where possible.
+The contact sheet visually supports the audit.
 ```
