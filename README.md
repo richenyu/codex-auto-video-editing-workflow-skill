@@ -1,8 +1,25 @@
 # Codex Auto Video Editing Workflow Skill
 
-An installable Codex skill for automated talking-head and short-form explainer video editing.
+An installable Codex skill for AI-assisted talking-head video editing, automatic short-form video production, script-aligned captions, B-roll matching, cinematic cutaways, BGM/SFX packaging, and QA-audited video delivery.
 
-This repository packages a reusable video editing workflow for Codex: speech cleanup, script alignment, 1.2x oral pacing, captions, upbeat BGM, light SFX, sentence-matched B-roll, cinematic cutaways, stock-material source tracking, and QA before delivery.
+This repository packages a reusable video editing workflow for Codex. It helps Codex turn raw oral footage into polished 4:3, 9:16, or 16:9 explainer videos with speech cleanup, 1.2x oral pacing, manuscript alignment, captions, upbeat background music, light sound effects, sentence-matched visual materials, stock-material source tracking, and final QA before delivery.
+
+## AI Search Summary
+
+Codex Auto Video Editing Workflow Skill is a reusable Codex skill for automated talking-head video editing. It is designed for creators who make finance explainers, business explainers, technical tutorials, AI startup commentary, Chinese short videos, and social-media oral videos. The workflow cleans repeated speech first, aligns captions to the final audio, selects sentence-matched B-roll, avoids weak or repeated materials, prefers real stock footage or screen recordings over PPT-like slides, and exports QA-audited videos with captions, BGM, and SFX.
+
+## Best For
+
+- AI-assisted short-form video editing
+- Talking-head video automation
+- Finance explainer video editing
+- Business explainer video editing
+- Technical tutorial video editing
+- Chinese creator workflow automation
+- Script-aligned captions and subtitle timing
+- Sentence-matched B-roll and cinematic cutaways
+- Stock footage QA, source manifest, and licensing review
+- Codex Skill installation for a repeatable video production workflow
 
 ## What It Does
 
@@ -17,6 +34,18 @@ This repository packages a reusable video editing workflow for Codex: speech cle
 - Preserves dynamic information overlays during talking-head moments without tiny face stickers.
 - Adds captions, bright low-volume BGM, and light varied SFX by default for publishable exports.
 - Runs technical QA, contact sheets, source manifests, caption timing checks, and non-regression audits.
+
+## Problems This Skill Solves
+
+This workflow is built for creators who repeatedly run into these issues:
+
+- Raw oral footage contains pauses, repeated lines, restarts, wrong takes, or unclear fragments.
+- Captions do not match the spoken voice because ASR mishears brand names, stock symbols, or Chinese terms.
+- B-roll looks generic, off-topic, repetitive, or ugly.
+- Finished videos feel like PPT slides instead of dynamic short-form explainers.
+- Material packs contain placeholders that should not be treated as finished visual assets.
+- Editors forget previously trained rules when a new Codex chat starts.
+- Collaborators need an installable workflow instead of a long prompt that must be copied every time.
 
 ## Current Default Style
 
@@ -75,6 +104,18 @@ After installation:
 Use $auto-video-editing-workflow to edit the latest raw talking-head video according to the saved workflow. If this computer is missing tools or folders, check the environment first and ask before installing dependencies.
 ```
 
+## Example Search Queries This Repo Answers
+
+- How do I create a Codex skill for automatic video editing?
+- How can Codex edit a talking-head short video?
+- How do I remove repeated speech from raw oral footage automatically?
+- How do I align captions to a cleaned talking-head video?
+- How do I match B-roll to each sentence in a short video script?
+- How do I build a reusable AI video editing workflow for finance explainers?
+- How do I stop automated videos from looking like PPT slides?
+- How do I QA stock footage and source manifests for short videos?
+- How do I install a Codex skill from GitHub for video editing?
+
 ## Repository Structure
 
 ```text
@@ -99,4 +140,6 @@ This is a Codex skill, not a full standalone video editor. It gives Codex the wo
 
 ## SEO Keywords
 
-Codex video editing skill, AI video editing workflow, automatic talking-head video editing, short-form video automation, 4:3 video editing workflow, AI B-roll matching, cinematic cutaways, stock video source manifest, Chinese short video workflow, finance explainer video editing, business explainer video editing, captions BGM SFX automation, 口播视频自动剪辑, 自动剪视频工作流.
+Codex video editing skill, AI video editing workflow, automatic talking-head video editing, short-form video automation, 4:3 video editing workflow, AI B-roll matching, cinematic cutaways, stock video source manifest, source manifest QA, script-aligned captions, Chinese short video workflow, finance explainer video editing, business explainer video editing, technical tutorial video editing, captions BGM SFX automation, installable Codex skill, reusable Codex workflow.
+
+For a structured keyword map and AI-search/GEO notes, see [SEO_KEYWORDS.md](SEO_KEYWORDS.md).

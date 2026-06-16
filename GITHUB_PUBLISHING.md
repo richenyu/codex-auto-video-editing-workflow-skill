@@ -28,6 +28,34 @@ Optional Chinese display name:
 Codex 自动视频剪辑工作流
 ```
 
+## Repository Metadata
+
+Recommended GitHub description:
+
+```text
+Installable Codex skill for AI-assisted talking-head video editing: speech cleanup, script-aligned captions, BGM/SFX, sentence-matched B-roll, cinematic cutaways, source manifests, and QA.
+```
+
+Recommended topics:
+
+```text
+codex
+codex-skill
+video-editing
+ai-video-editing
+short-form-video
+talking-head-video
+workflow-automation
+b-roll
+captions
+ffmpeg
+creator-tools
+finance-explainer
+business-explainer
+```
+
+Public-facing docs should be English-first. The skill may still contain Chinese trigger phrases, Chinese folder names, and Chinese bottom-logic references because the source workflow is used for Chinese oral videos and Chinese creator commands.
+
 ## Install Prompt For Collaborators
 
 ```text
@@ -74,3 +102,5 @@ Use $auto-video-editing-workflow to edit the latest raw talking-head video accor
 - Formal scripts are used for captions and visual timing when available.
 - `.gitignore` excludes raw/generated media and secrets.
 - Validation passes before pushing.
+- README has AI-search summary, target query coverage, install prompt, and natural keyword placement.
+- `SEO_KEYWORDS.md` has primary keywords, long-tail keywords, GEO answer blocks, and recommended GitHub topics.
